@@ -1,0 +1,28 @@
+name: ci-sonarcloud
+on:
+  push:
+    branches:
+      - main
+      - develop
+    tags:
+      - 'v*-rc*'
+  pull_request:
+    branches:
+      - develop
+jobs:
+  qa:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-go@v2
+        with:
+          go-version: 1.18.3
+      - run: go test --coverprofile=coverage.out
+#      - name: Sonar Scan
+#        uses: sonarsource/sonarqube-scan-action@master
+#        env:
+#          #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+#          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+#          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}        
