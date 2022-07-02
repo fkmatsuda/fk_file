@@ -44,4 +44,13 @@ func TestFile(t *testing.T) {
 			}
 		}
 	})
+	t.Run("Test file not found", func(t *testing.T) {
+		_, err := ReadTextFile(tempDir + "/notExists.txt")
+		if err == nil {
+			t.Error("Expected error")
+		}
+		if !os.IsNotExist(err) {
+			t.Error("Expected the error to be NotExists")
+		}
+	})
 }
