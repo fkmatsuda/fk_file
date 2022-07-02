@@ -52,4 +52,14 @@ func TestCompress(t *testing.T) {
 			t.Error("Expected compressed file to be smaller")
 		}
 	})
+	t.Run("Open source file error", func(t *testing.T) {
+		filePath := tempDir + "/notExists.txt"
+		err := CompressFile(filePath, tempDir+"/test.txt.gz", true)
+		if err == nil {
+			t.Error("Expected error")
+		}
+		if !os.IsNotExist(err) {
+			t.Error("Expected the error to be NotExists")
+		}
+	})
 }
