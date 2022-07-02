@@ -2,13 +2,9 @@ package fkfile
 
 import (
 	"io/ioutil"
+	"os"
+	"path/filepath"
 )
-
-// WriteTextFile writes text to a file
-func WriteTextFile(filename string, text string) (err error) {
-	err = ioutil.WriteFile(filename, []byte(text), 0644)
-	return
-}
 
 // ReadTextFile returns text of a file
 func ReadTextFile(filename string) (text string, err error) {
