@@ -51,6 +51,9 @@ func TestCompress(t *testing.T) {
 		if cfi.Size() > fi.Size() {
 			t.Error("Expected compressed file to be smaller")
 		}
+		if cfi.Size() == 0 {
+			t.Error("Expected compressed file to be non-empty")
+		}
 	})
 	t.Run("Open source file error", func(t *testing.T) {
 		filePath := tempDir + "/notExists.txt"
