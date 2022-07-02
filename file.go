@@ -20,21 +20,19 @@ func EnsureDir(path string) error {
 	parent := filepath.Dir(path)
 	if parent == path {
 		return nil
-	} else {
-		err := EnsureDir(parent)
-		if err != nil {
-			return err
-		}
-		if _, err := os.Stat(path); err != nil {
-			if os.IsNotExist(err) {
-				err = os.MkdirAll(path, os.ModePerm)
-				if err != nil {
-					return err
-				}
-			} else {
+	}
+	err := EnsureDir(parent)
+	if err != nil {
+		return err
+	}
+	if _, err := os.Stat(path); err != nil {
+		if os.IsNotExist(err) {
+			err = os.MkdirAll(path, os.ModePerm)
+			if err != nil {
 				return err
 			}
 		}
+		return err
 	}
 	return nil
 }
