@@ -3,7 +3,7 @@ package fkfile
 import (
 	"bufio"
 	"compress/gzip"
-	"io/ioutil"
+	"io"
 	"os"
 )
 
@@ -17,11 +17,6 @@ func CompressFile(src, dst string, removeSrc bool) error {
 
 	r := bufio.NewReader(srcFile)
 
-	data, err := ioutil.ReadAll(r)
-	if err != nil {
-		return err
-	}
-
 	dstFile, err := os.Create(dst)
 	if err != nil {
 		return err
@@ -30,7 +25,7 @@ func CompressFile(src, dst string, removeSrc bool) error {
 	w := gzip.NewWriter(dstFile)
 	defer w.Close()
 
-	_, err = w.Write(data)
+	_, err = io.Copy(w, r)
 	if err != nil {
 		return err
 	}
