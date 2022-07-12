@@ -71,3 +71,14 @@ func (zipFile *ZipFile) AddEntry(name string, reader io.Reader) error {
 	}
 	return nil
 }
+
+// AddFile adds a file to the zip file
+func (zipFile *ZipFile) AddFile(name string) error {
+	srcFile, err := os.Open(name)
+	if err != nil {
+		return err
+	}
+	defer srcFile.Close()
+
+	return zipFile.AddEntry(name, srcFile)
+}
